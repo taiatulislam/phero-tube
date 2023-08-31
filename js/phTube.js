@@ -28,20 +28,30 @@ const showCard = async (categoryId) => {
     const data = await allCardData.json();
     const cardData = data.data;
 
-    for (const card of cardData) {
-        const newCard = document.createElement('div');
-        newCard.innerHTML = `
-        <figure>
-            <img src="${card.thumbnail}" alt="phTube" class="rounded-xl mx-auto w-[312px] h-[200px]" />
-        </figure>
-        <div class="card-body items-center text-center">
-            <h2 class="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions">
-                <button class="btn btn-primary">Buy Now</button>
-            </div>
-        </div>`
-        newCard.classList.add = 'class="card bg-base-100 shadow-xl';
-        cardContainer.appendChild(newCard);
+    const noData = document.getElementById('noData');
+
+    if (cardData.length > 0) {
+        noData.classList.add('hidden');
+        for (const card of cardData) {
+            const newCard = document.createElement('div');
+            newCard.innerHTML = `
+            <figure>
+                <img src="${card.thumbnail}" alt="phTube" class="rounded-xl mx-auto w-[312px] h-[200px]" />
+            </figure>
+            <div class="card-body items-center text-center">
+                <h2 class="card-title">Shoes!</h2>
+                <p>If a dog chews shoes whose shoes does he choose?</p>
+                <div class="card-actions">
+                    <button class="btn btn-primary">Buy Now</button>
+                </div>
+            </div>`
+            newCard.classList.add = 'class="card bg-base-100 shadow-xl';
+            cardContainer.appendChild(newCard);
+        }
     }
+    else {
+        noData.classList.remove('hidden');
+    }
+
+
 }
