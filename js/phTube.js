@@ -41,8 +41,9 @@ const showCard = async (categoryId) => {
                 <img src="${card.thumbnail}" alt="phTube" class="rounded-xl mx-auto w-[312px] h-[200px]"/>
             </figure>
             <div class="mr-4">
-            <p class="bg-black text-white rounded-md block text-xs w-fit p-2 -mt-10 float-right">${parseInt(card.others?.posted_date / 3600)} hr ${parseInt((card.others?.posted_date % 3600) / 60)} min ago</p>
+                <p class="bg-black text-white rounded-md block text-xs w-fit p-2 -mt-10 float-right time">${card.others.posted_date > 0 ? `${parseInt(card.others?.posted_date / 3600)} hr ${parseInt((card.others?.posted_date % 3600) / 60)} min ago` : ''}</p>
             </div>
+            
             <div class="card-body p-5">
                 <div class="flex flex-row gap-5">
                     <div>
@@ -58,10 +59,11 @@ const showCard = async (categoryId) => {
                     </div>
                 </div>
             </div>`
-            newCard.classList.add('card', 'bg-base-100', 'shadow-xl');
+            newCard.classList.add('card', 'bg-base-100', 'shadow-xl', `${categoryId}`);
             cardContainer.appendChild(newCard);
         }
         verified();
+        time();
     }
 
     else {
@@ -91,7 +93,49 @@ const verified = () => {
 
 
 // Time function
-function timeZero() {
+const time = () => {
     const timeList = document.getElementsByClassName('time');
-    console.log(timeList.innerText.split(' '));
+    for (const time of timeList) {
+        if (time.innerText === '') {
+            time.classList.remove('bg-black');
+        }
+    }
+}
+
+// Sort function
+const sortFunction = () => {
+    const sortCard = document.getElementsByClassName('sort');
+    const sortList = [];
+
+    for (const singleCard of sortCard) {
+        const value = singleCard.innerText.split(' ');
+        const number = value[0].split('K');
+        sortList.push(number[0])
+    }
+    sortList.sort((a, b) => a - b);
+
+    const stringList = [];
+    for (let value of sortList) {
+        newValue = `${value}K views`;
+        stringList.push(newValue);
+    }
+
+    cardSorting(stringList.reverse());
+}
+
+
+// Sorting
+const cardSorting = async (stringList) => {
+
+    const cardContainer = document.getElementById('cardContainer');
+    const childDiv = cardContainer.childNodes;
+
+
+    for (let i = 0; i < childDiv.length; i++) {
+        for (let j = 0; j < childDiv.length; j++) {
+            if (stringList[i] === childDiv[j].childNodes[5].childNodes[1].childNodes[3].childNodes[5].innerText) {
+                childDiv[j].classList.add(`order-${i + 1}`);
+            }
+        }
+    }
 }
