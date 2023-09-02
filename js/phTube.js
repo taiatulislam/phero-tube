@@ -38,9 +38,9 @@ const showCard = async (categoryId) => {
             const newCard = document.createElement('div');
             newCard.innerHTML = `
             <figure>
-                <img src="${card.thumbnail}" alt="phTube" class="rounded-xl mx-auto w-[312px] h-[200px]"/>
+                <img src="${card.thumbnail}" alt="phTube" class="rounded-xl w-screen h-[200px]"/>
             </figure>
-            <div class="mr-4">
+            <div class="mr-3">
                 <p class="bg-black text-white rounded-md block text-xs w-fit p-2 -mt-10 float-right time">${card.others.posted_date > 0 ? `${parseInt(card.others?.posted_date / 3600)} hr ${parseInt((card.others?.posted_date % 3600) / 60)} min ago` : ''}</p>
             </div>
             
@@ -59,7 +59,7 @@ const showCard = async (categoryId) => {
                     </div>
                 </div>
             </div>`
-            newCard.classList.add('card', 'bg-base-100', 'shadow-xl', `${categoryId}`);
+            newCard.classList.add('card', 'p-5', 'bg-base-100', 'shadow-xl', `${categoryId}`);
             cardContainer.appendChild(newCard);
         }
         verified();
